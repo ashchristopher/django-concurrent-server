@@ -11,7 +11,7 @@ class Command(BaseCommand):
         make_option('--adminmedia', dest='admin_media_path', default='',
             help='Specifies the directory from which to serve admin media.'),
     )
-    help = "Starts a lightweight Web server for development."
+    help = "Starts a lightweight concurrent development web server."
     args = '[optional port number, or ipaddr:port]'
 
     if hasattr(settings, 'RUNSERVER_DEFAULT_ADDR'):
@@ -58,7 +58,7 @@ class Command(BaseCommand):
             print "Validating models..."
             self.validate(display_num_errors=True)
             print "\nDjango version %s, using settings %r" % (django.get_version(), settings.SETTINGS_MODULE)
-            print "Development server is running at http://%s:%s/" % (addr, port)
+            print "Concurrent Development server is running at http://%s:%s/" % (addr, port)
             print "Quit the server with %s." % quit_command
 
             # django.core.management.base forces the locale to en-us. We should
