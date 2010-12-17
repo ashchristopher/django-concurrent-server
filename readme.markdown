@@ -1,6 +1,5 @@
-=============================
-django-concurrent-server
-=============================
+# django-concurrent-server #
+
 This is a fork of James Aylett's django_concurrent_test_server. It has been updated to use
 setuptools for installation allowing developers to install with package management such as
 pip. 
@@ -9,8 +8,8 @@ I have also updated the package structure and command names as James made them j
 long. 
 
 
-Usage
-=====
+## Usage ##
+
 1. Install django-concurrent-server via whatever mechanism you see fit (I suggest pip).
 2. Add concurrent_server to your INSTALLED_APPS
 3. If threads worry you, and bearing the above warning in mind, set
