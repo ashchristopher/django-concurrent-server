@@ -7,8 +7,8 @@ setup(
     # Get more strings from http://www.python.org/pypi?:action=list_classifiers
     author='Istvan Albert, James Aylett, Ash Christopher',
     author_email='ash.christopher@gmail.ca',
-    url='https://github.com/ashchristopher/django_concurrent_test_server',
-    download_url='https://github.com/ashchristopher/django_concurrent_test_server',
+    url='https://github.com/ashchristopher/django-concurrent-server',
+    download_url='https://github.com/ashchristopher/django-concurrent-server',
     license='Django',
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
