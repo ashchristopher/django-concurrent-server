@@ -11,7 +11,7 @@ long.
 ## Usage ##
 
 1. Install django-concurrent-server via whatever mechanism you see fit (I suggest pip).
-__pip install -e git+git://github.com/ashchristopher/django-concurrent-server.git#egg=django-concurrent-server__
+    _pip install -e git+git://github.com/ashchristopher/django-concurrent-server.git#egg=django-concurrent-server_
 2. Add concurrent_server to your INSTALLED_APPS
 3. If threads worry you, and bearing the above warning in mind, set
    CONCURRENT_THREADING = False in settings.py to use forking
