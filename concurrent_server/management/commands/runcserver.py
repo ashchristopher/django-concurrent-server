@@ -22,6 +22,11 @@ class Command(BaseCommand):
         DEFAULT_PORT = str(settings.RUNSERVER_DEFAULT_PORT)
     else:
         DEFAULT_PORT = '8000'
+    
+    #default to the new django1.4 style of admin staticfiles
+    DJANGO_ADMIN_MEDIA_PATH = django.__path__[0] + '/contrib/admin/static/admin'
+    if django.VERSION[0] == 1 and django.VERSION[1] < 4:
+        DJANGO_ADMIN_MEDIA_PATH = django.__path__[0] + '/contrib/admin/media'
 
     # Validation is called explicitly each time the server is reloaded.
     requires_model_validation = False
@@ -67,7 +72,7 @@ class Command(BaseCommand):
             translation.activate(settings.LANGUAGE_CODE)
 
             try:
-                path = admin_media_path or django.__path__[0] + '/contrib/admin/media'
+                path = admin_media_path or DJANGO_ADMIN_MEDIA_PATH
                 handler = AdminMediaHandler(WSGIHandler(), path)
                 run(addr, int(port), handler)
             except WSGIServerException, e:
