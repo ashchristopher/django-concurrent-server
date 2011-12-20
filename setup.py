@@ -10,7 +10,7 @@ setup(
     url='https://github.com/ashchristopher/django-concurrent-server',
     download_url='https://github.com/ashchristopher/django-concurrent-server',
     license='Django',
-    packages=find_packages(exclude=['ez_setup']),
+    packages=['concurrent_server'],
     include_package_data=True,
     zip_safe=True, # because we're including media that Django needs
     classifiers=[
