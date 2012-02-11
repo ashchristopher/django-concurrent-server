@@ -73,7 +73,7 @@ class Command(BaseCommand):
             translation.activate(settings.LANGUAGE_CODE)
 
             try:
-                path = admin_media_path or DJANGO_ADMIN_MEDIA_PATH
+                path = admin_media_path or self.DJANGO_ADMIN_MEDIA_PATH
                 handler = AdminMediaHandler(WSGIHandler(), path)
                 run(addr, int(port), handler)
             except WSGIServerException, e:
