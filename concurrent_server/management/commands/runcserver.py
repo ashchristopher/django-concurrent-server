@@ -5,6 +5,7 @@ from optparse import make_option
 import os
 import sys
 
+
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--noreload', action='store_false', dest='use_reloader', default=True,
@@ -76,8 +77,8 @@ class Command(BaseCommand):
                 try:
                     from django.contrib.staticfiles.handlers import StaticFilesHandler
                     handler = StaticFilesHandler(WSGIHandler())
-                except ImportError: # This is to old version of django
-                    path = admin_media_path or django.__path__[0] + '/contrib/admin/media'
+                except ImportError:  # This is to old version of django
+                    path = admin_media_path or os.path.join(django.__path__[0], 'contrib', 'admin', 'media')
                     from django.core.servers.basehttp import AdminMediaHandler
                     handler = AdminMediaHandler(WSGIHandler(), path)
                 run(addr, int(port), handler)
