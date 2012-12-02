@@ -5,7 +5,7 @@ setup(
     version=__import__('concurrent_server').__version__,
     description='Provides a multi-threaded (concurrent) development sever for Django.',
     # Get more strings from http://www.python.org/pypi?:action=list_classifiers
-    author='Istvan Albert, James Aylett, Ash Christopher',
+    author='Istvan Albert, James Aylett, Ash Christopher, Pablo Martin',
     author_email='ash.christopher@gmail.ca',
     url='https://github.com/ashchristopher/django-concurrent-server',
     download_url='https://github.com/ashchristopher/django-concurrent-server',
