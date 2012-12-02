@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
     def handle(self, addrport='', *args, **options):
         import django
-        from django.core.servers.basehttp import AdminMediaHandler, WSGIServerException
+        from django.core.servers.basehttp import WSGIServerException
         from concurrent_server.servers import run
         from django.core.handlers.wsgi import WSGIHandler
         if args:
@@ -78,6 +78,7 @@ class Command(BaseCommand):
                     handler = StaticFilesHandler(WSGIHandler())
                 except ImportError: # This is to old version of django
                     path = admin_media_path or django.__path__[0] + '/contrib/admin/media'
+                    from django.core.servers.basehttp import AdminMediaHandler
                     handler = AdminMediaHandler(WSGIHandler(), path)
                 run(addr, int(port), handler)
             except WSGIServerException, e:
