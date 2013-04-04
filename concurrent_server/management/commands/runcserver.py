@@ -12,7 +12,12 @@ class Command(BaseCommand):
             help='Tells Django to NOT use the auto-reloader.'),
         make_option('--adminmedia', dest='admin_media_path', default='',
             help='Specifies the directory from which to serve admin media.'),
+        make_option('--nostatic', action="store_false", dest='use_static_handler', default=True,
+            help='Tells Django to NOT automatically serve static files at STATIC_URL.'),
+        make_option('--insecure', action="store_true", dest='insecure_serving', default=False,
+            help='Allows serving static files even if DEBUG is False.'),
     )
+    
     help = "Starts a lightweight concurrent development web server."
     args = '[optional port number, or ipaddr:port]'
 
@@ -32,7 +37,7 @@ class Command(BaseCommand):
 
     # Validation is called explicitly each time the server is reloaded.
     requires_model_validation = False
-
+    
     def handle(self, addrport='', *args, **options):
         import django
         from django.core.servers.basehttp import WSGIServerException
@@ -57,6 +62,8 @@ class Command(BaseCommand):
         use_reloader = options.get('use_reloader', True)
         admin_media_path = options.get('admin_media_path', '')
         shutdown_message = options.get('shutdown_message', '')
+        use_static_handler = options.get('use_static_handler', True)
+        insecure_serving = options.get('insecure_serving', False)
         quit_command = (sys.platform == 'win32') and 'CTRL-BREAK' or 'CONTROL-C'
 
         def inner_run():
@@ -72,16 +79,21 @@ class Command(BaseCommand):
             # set it up correctly for the first request (particularly important
             # in the "--noreload" case).
             translation.activate(settings.LANGUAGE_CODE)
-
+            
             try:
-                try:
-                    from django.contrib.staticfiles.handlers import StaticFilesHandler
-                    handler = StaticFilesHandler(WSGIHandler())
-                except ImportError:  # This is to old version of django
-                    path = admin_media_path or os.path.join(django.__path__[0], 'contrib', 'admin', 'media')
-                    from django.core.servers.basehttp import AdminMediaHandler
-                    handler = AdminMediaHandler(WSGIHandler(), path)
+                handler = WSGIHandler()
+                
+                if use_static_handler and (settings.DEBUG or insecure_serving):
+                    try:
+                        from django.contrib.staticfiles.handlers import StaticFilesHandler
+                        handler = StaticFilesHandler(handler)
+                    except ImportError:  # This is to old version of django
+                        path = admin_media_path or os.path.join(django.__path__[0], 'contrib', 'admin', 'media')
+                        from django.core.servers.basehttp import AdminMediaHandler
+                        handler = AdminMediaHandler(handler, path)
+                        
                 run(addr, int(port), handler)
+                
             except WSGIServerException, e:
                 # Use helpful error messages instead of ugly tracebacks.
                 ERRORS = {
@@ -106,3 +118,4 @@ class Command(BaseCommand):
             autoreload.main(inner_run)
         else:
             inner_run()
+            
