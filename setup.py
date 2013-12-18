@@ -9,7 +9,7 @@ setup(
     author_email='ash.christopher@gmail.ca',
     url='https://github.com/ashchristopher/django-concurrent-server',
     download_url='https://github.com/ashchristopher/django-concurrent-server',
-    license='Django',
+    license='MIT',
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
     zip_safe=True, # because we're including media that Django needs
